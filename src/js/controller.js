@@ -2,16 +2,17 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 //support by old browsers
 import 'core-js/stable'; // for polyfilling everything else
 import 'regenerator-runtime/runtime'; // for polyfilling async/await
 
 // for parcel
-if (module.hot) {
+/* if (module.hot) {
 	module.hot.accept();
 }
-
+ */
 const controlRecipes = async function(){
 	try {
 		const id = window.location.hash.slice(1);
@@ -41,7 +42,12 @@ const conrolSearchResult = async function() {
 		await model.loadSearchResult(query);
 
 		// 3) Render results
-		resultsView.render(model.state.search.results);
+		//resultsView.render(model.state.search.results);
+		resultsView.render(model.getSearchResultPage());
+
+		// 4) Render initial pagination buttons
+		paginationView.render(model.state.search);
+
 	} catch(err) {
 		//recipeView.renderError();
 		console.log(err);
