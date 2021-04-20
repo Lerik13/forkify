@@ -54,9 +54,18 @@ const conrolSearchResult = async function() {
 	}
 };
 
+const controlPagination = function(goToPage) {
+	// 1) Render NEW results
+	resultsView.render(model.getSearchResultPage(goToPage));
+
+	// 2) Render NEW pagination buttons
+	paginationView.render(model.state.search);
+};
+
 const init = function(){
 	recipeView.addHandlerRender(controlRecipes);
 	searchView.addHandlerSearch(conrolSearchResult);
+	paginationView.addHandlerClick(controlPagination);
 };
 init();
 
